@@ -50,7 +50,7 @@ DEFAULT_CFP_STEPS = {
         {
             "title": "That's it about your submission! We now just need a way to contact you.",  # TODO: i18n
             "text": "To create your submission, you need an account on this page. This not only gives us a way to contact you, it also gives you the possibility to edit your submission or to view its current state.",
-            "icon": "paper-circle-o",
+            "icon": "user-circle-o",
             "icon_label": "Account",
             "identifier": "auth",
         },
@@ -175,6 +175,12 @@ class CfPWorkflow:
     def to_json(self):
         return self.data(self)
 
+    def all_data(self):
+        return {
+            "event": self.event.slug,
+            "steps": self.steps,
+        }
+
     @staticmethod
     def data(self):
         """Returns the canonical CfPWorkflow data format.
@@ -187,7 +193,4 @@ class CfPWorkflow:
             - For the types submission, user, and profile: a field_name
             - For the question type: a question_pk
             - The keys help_text and required"""
-        return json.dumps({
-            "event": self.event.slug,
-            "steps": self.steps,
-        })
+        return json.dumps(self.all_data())
